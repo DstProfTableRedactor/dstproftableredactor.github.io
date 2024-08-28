@@ -1,0 +1,49 @@
+@use 'colors';
+@use 'gradients';
+@use 'commonSizes';
+@use 'transparents';
+
+@font-face {
+  font-family: 'TildaSans';
+  src: url('../fonts/TildaSans.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'TildaSans';
+  height: 100%;
+  font-size: 1rem;
+  background-color: var(--background-950);
+}
+
+#__nuxt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.scrollbar__scroller {
+  border-radius: commonSizes.$borderRadius;
+}
+
+.scrollbar__thumb {
+  background-color: var(--background-300) !important;
+}
+
+.noselect {
+  -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none; 
+}
+
+h1, h2, h3, h4, h5, h6, p, label {
+  color: var(--text-950);
+}

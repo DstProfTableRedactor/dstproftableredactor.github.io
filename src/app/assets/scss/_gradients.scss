@@ -1,0 +1,25 @@
+:root {
+    --linearPrimarySecondary: linear-gradient(var(--primary-700), var(--secondary-600));
+    --linearPrimaryAccent: linear-gradient(var(--primary-700), var(--accent-600));
+    --linearSecondaryAccent: linear-gradient(var(--secondary-600), var(--accent-600));
+    --linearPrimaryToLighter: linear-gradient(var(--primary-700), var(--primary-400));
+    --linearSecondaryToLighter: linear-gradient(var(--secondary-600), var(--secondary-400));
+    --linearAccentToLighter: linear-gradient(var(--accent-500), var(--accent-400));
+    --linear-accent-400-600: linear-gradient(var(--accent-600), var(--accent-700));
+
+    --radialPrimarySecondary: radial-gradient(var(--primary-700), var(--secondary-600));
+    --radialPrimaryAccent: radial-gradient(var(--primary-700), var(--accent-600));
+    --radialSecondaryAccent: radial-gradient(var(--secondary-600), var(--accent-600));
+    --radialPrimaryToLighter: radial-gradient(var(--primary-700), var(--primary-400));
+    --radialSecondaryToLighter: radial-gradient(var(--secondary-600), var(--secondary-400));
+    --radialAccentToLighter: radial-gradient(var(--accent-600), var(--accent-400));
+
+    --loading-800-900: linear-gradient(110deg, 
+        var(--background-800) 8%, 
+        var(--background-900) 18%, 
+        var(--background-800) 33%);
+    --loading-900-950: linear-gradient(110deg, 
+        var(--background-900) 8%, 
+        var(--background-950) 18%, 
+        var(--background-900) 33%);
+}
