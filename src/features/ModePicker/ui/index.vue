@@ -14,18 +14,18 @@ const togglePaintMode = () => {
 
 <template>
 <div class="modes-wrapper">
-  <div
+  <ButtonFilled
     class="button"
     :class="editMode === EditMode.Type ? 'active' : ''"
     @click="toggleTypeMode">
     Текстовый ввод
-  </div>
-  <div
+  </ButtonFilled>
+  <ButtonFilled
     class="button"
     :class="editMode === EditMode.Paint ? 'active' : ''"
     @click="togglePaintMode">
     Покраска
-  </div>
+  </ButtonFilled>
 </div>
 </template>
 
@@ -38,18 +38,15 @@ const togglePaintMode = () => {
   gap: 2em;
 
   .button {
-    color: var(--text-50);
     display: flex;
     box-sizing: border-box;
-    height: 50px;
     width: fit-content;
-    padding: 1em;
-    background-color: #364758;
+    padding: 0.5em;
     align-items: center;
 
     &:hover {
       cursor: pointer;
-      filter: brightness(110%);
+      filter: brightness(105%);
     }
 
     &.active {
