@@ -1,8 +1,10 @@
 <script setup lang=ts>
+import { TableRedactor } from '~/widgets/TableRedactor';
+
 </script>
 
 <template>
-    <p>Page 1</p>
+    <TableRedactor />
 </template>
 
 <style scoped lang="scss">

@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { ThemeSwitch } from '~/features/ThemeSwitch';
+import { ModePicker } from '~/features/ModePicker';
+import { EditMode } from '~/shared/types/editmode';
 </script>
 
 <template>
   <header class="admin-header">
     <h1 class="admin-header-title">
-      Заголовок
+      Редактор таблицы техобслуживания
     </h1>
+    <ModePicker :edit-mode="EditMode.Paint" />
     <ThemeSwitch/>
   </header>
 </template>
