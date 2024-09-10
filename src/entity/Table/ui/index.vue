@@ -107,7 +107,7 @@ const constructTableBody = () => {
   }
 }
 
-const handleCellClick = (cell: TableCell) => {
+const handleCellClick = (event: MouseEvent, cell: TableCell) => {
   if (store.editMode === EditMode.Default) {
     return;
   }
@@ -117,11 +117,13 @@ const handleCellClick = (cell: TableCell) => {
   }
 
   if (store.editMode === EditMode.Type) {
+    redactedCellWidth.value = (event.target! as HTMLElement).clientWidth + 'px';
     redactedCell.value = cell;
   }
 }
 
 const redactedCell = ref<TableCell>();
+const redactedCellWidth = ref<string>('100%');
 
 const handleCellUpdate = (value: string, cell: TableCell) => {
   cell.data = value
@@ -134,6 +136,7 @@ const handleCellUpdate = (value: string, cell: TableCell) => {
 const handleBlur = (value: string, cell: TableCell) => {
   cell.data = value;
   redactedCell.value = undefined;
+  redactedCellWidth.value = '100%';
   emit('symbolReplace', cell);
 }
 </script>
@@ -155,12 +158,12 @@ const handleBlur = (value: string, cell: TableCell) => {
                 @blur="handleBlur($event, cell)" />
               <td 
                 v-else-if="!cell.gray"
-                @click="handleCellClick(cell)"
+                @click="handleCellClick($event, cell)"
                 class="cell">
                 {{ cell.data }}
               </td>
               <th 
-                @click="handleCellClick(cell)"
+                @click="handleCellClick($event, cell)"
                 class="cell"
                 :class="{'redacted': cell === redactedCell}"
                 v-else>
@@ -187,7 +190,7 @@ const handleBlur = (value: string, cell: TableCell) => {
   .redacted {
     background-color: var(--text-200);
     flex: 1;
-    width: 100%;
+    width: v-bind(redactedCellWidth);
     box-sizing: border-box;
   }
 
