@@ -1,6 +1,9 @@
 <script setup lang=ts>
 import { TableRedactor } from '~/widgets/TableRedactor';
 
+useHead({
+    title: 'Редактор таблиц',
+})
 </script>
 
 <template>
