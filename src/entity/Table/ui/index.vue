@@ -3,16 +3,18 @@ import { onMounted, ref, watch } from 'vue';
 import type { TableBody, TableRow, TableCell } from '~/shared/types/table';
 import { EditMode } from '~/shared/types/editmode';
 import { TableInput } from '~/features/EditTable'; //FIXME: Not FSD, rewrite to use slot passed from widget
+import { useEditStore } from '~/shared/stores/edit';
 
 const props = defineProps<{
   tableHtml: string,
-  editMode: EditMode
 }>()
 
 const emit = defineEmits<{
   (e: 'cellClick', value: TableCell): void,
   (e: 'symbolReplace', cell: TableCell): void
 }>()
+
+const store = useEditStore();
 
 const tableHeader = ref<string>(''); 
 
@@ -24,8 +26,10 @@ const tableBody = ref<TableBody>({
   dataEnd: 0,
 })
 
+const afterTable = ref<string>('')
+
 onMounted(() => {
-  console.log('props.tableHtml', props.tableHtml);
+  //console.log('props.tableHtml', props.tableHtml);
   constructTableBody();
 })
 
@@ -98,19 +102,21 @@ const constructTableBody = () => {
     if (tableRow.columns.length > 0) {
       tableBody.value.rows.push(tableRow);
     }
+
+    afterTable.value = props.tableHtml.slice(tableBody.value.dataEnd).replace(/[\s\S]*?<\/table>/, '');
   }
 }
 
 const handleCellClick = (cell: TableCell) => {
-  if (props.editMode === EditMode.Default) {
+  if (store.editMode === EditMode.Default) {
     return;
   }
   
-  if (props.editMode === EditMode.Paint) {
+  if (store.editMode === EditMode.Paint) {
     emit('cellClick', cell);
   }
 
-  if (props.editMode === EditMode.Type) {
+  if (store.editMode === EditMode.Type) {
     redactedCell.value = cell;
   }
 }
@@ -164,21 +170,25 @@ const handleBlur = (value: string, cell: TableCell) => {
         </tr>
       </tbody>
     </table>
+    <div class="after-table" v-html="afterTable" />
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .maintenance-table-wrapper {
-  width: 100vw;
+  width: fit-content !important;
   max-width: 100%;
   align-self: center;
 }
 
-.table:deep() {
+.table {
   border-collapse: collapse;
 
   .redacted {
-    background-color: var(--text-400);
+    background-color: var(--text-200);
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   h3 {
@@ -203,7 +213,8 @@ const handleBlur = (value: string, cell: TableCell) => {
   th,
   td,
   .cell,
-  input {
+  input,
+  thead > tr > th {
     padding: 5px 5px;
     border: 1px solid var(--text-900);
     border-collapse: collapse;
@@ -211,6 +222,12 @@ const handleBlur = (value: string, cell: TableCell) => {
     font-size: var(--medium);
     font-weight: 500;
     text-align: center;
+  }
+
+  thead {
+    tr:nth-of-type(1) {
+      background-color: #d8d8d8;
+    }
   }
 
   input {
@@ -222,16 +239,41 @@ const handleBlur = (value: string, cell: TableCell) => {
   }
 
   h5 {
-    margin: var(--padding) * 2;
+    margin: $padding * 2;
     text-align: right;
   }
 
   th {
     background-color: #d8d8d8;
   }
-
-  th:nth-of-type(2) {
-    font-weight: 600;
-  }
 }
+
+thead::v-deep(th) {
+  padding: 5px 5px;
+  border: 1px solid var(--text-900);
+  border-collapse: collapse;
+  color: var(--text-900);
+  font-size: var(--medium);
+  font-weight: 500;
+  text-align: center;
+  background-color: #d8d8d8;
+
+}
+
+thead::v-deep(td) {
+  padding: 5px 5px;
+  border: 1px solid var(--text-900);
+  border-collapse: collapse;
+  color: var(--text-900);
+  font-size: var(--medium);
+  font-weight: 500;
+  text-align: center;
+}
+
+.after-table::v-deep(h5) {
+      margin: $padding * 2;
+      text-align: right;
+      font-weight: 500;
+}
+
 </style>

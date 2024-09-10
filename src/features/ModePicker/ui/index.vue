@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { useEditStore } from '~/shared/stores/edit';
 import { EditMode } from '~/shared/types/editmode';
 
-const editMode = defineModel<EditMode>('editMode', { required: true });
+const store = useEditStore();
 
 const toggleTypeMode = () => {
-  editMode.value = editMode.value === EditMode.Type ? EditMode.Default : EditMode.Type
+  store.editMode = store.editMode === EditMode.Type ? EditMode.Default : EditMode.Type
 }
 
 const togglePaintMode = () => {
-  editMode.value = editMode.value === EditMode.Paint ? EditMode.Default : EditMode.Paint
+  store.editMode = store.editMode === EditMode.Paint ? EditMode.Default : EditMode.Paint
 }
 </script>
 
@@ -16,13 +17,13 @@ const togglePaintMode = () => {
 <div class="modes-wrapper">
   <ButtonFilled
     class="button"
-    :class="editMode === EditMode.Type ? 'active' : ''"
+    :class="store.editMode === EditMode.Type ? 'active' : ''"
     @click="toggleTypeMode">
     Текстовый ввод
   </ButtonFilled>
   <ButtonFilled
     class="button"
-    :class="editMode === EditMode.Paint ? 'active' : ''"
+    :class="store.editMode === EditMode.Paint ? 'active' : ''"
     @click="togglePaintMode">
     Покраска
   </ButtonFilled>

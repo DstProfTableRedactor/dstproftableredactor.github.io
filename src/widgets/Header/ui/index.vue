@@ -10,7 +10,6 @@ import { EditMode } from '~/shared/types/editmode';
       Редактор таблицы техобслуживания
     </h1>
     <ModePicker :edit-mode="EditMode.Paint" />
-    <ThemeSwitch/>
   </header>
 </template>
 

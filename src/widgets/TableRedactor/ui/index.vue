@@ -2,12 +2,13 @@
 import { initialTable } from '~/app/assets/initial_table.html';
 import { MaintenanceTable } from '~/entity/Table';
 import { TableTextarea } from '~/features/EditTable';
+import { useEditStore } from '~/shared/stores/edit';
 import { EditMode } from '~/shared/types/editmode';
 import type { TableCell } from '~/shared/types/table';
 
 const hmtlText = ref<string>(initialTable);
 
-const editMode = ref<EditMode>(EditMode.Default);
+const store = useEditStore();
 
 const replaceAt = function(value: string, startIndex: number, endIndex: number, replacement: string) {
   console.log(replacement)
@@ -15,7 +16,7 @@ const replaceAt = function(value: string, startIndex: number, endIndex: number, 
 }
 
 const handleCellClick = (cell: TableCell) => {
-  if (editMode.value === EditMode.Paint) {
+  if (store.editMode === EditMode.Paint) {
     hmtlText.value = replaceAt(hmtlText.value, cell.dataStart + 2, cell.dataStart + 2, hmtlText.value[cell.dataStart + 2] === 'd' ? 'h' : 'd');
     hmtlText.value = replaceAt(hmtlText.value, cell.dataStart + 8, cell.dataStart + 8, hmtlText.value[cell.dataStart + 8] === 'd' ? 'h' : 'd');
     return;
@@ -39,9 +40,10 @@ const handleTextReplace = (cell: TableCell) => {
   <div class="redactor-wrapper">
   <MaintenanceTable
     :tableHtml="hmtlText"
-    :editMode="editMode"
+    :editMode="store.editMode"
     @cellClick="handleCellClick"
     @symbolReplace="handleTextReplace" />
+  <div></div>
   <TableTextarea
     :value="hmtlText"
     @update:value="($event: any) => (hmtlText = $event)" />
@@ -51,14 +53,13 @@ const handleTextReplace = (cell: TableCell) => {
 <style scoped lang="scss">
 .redactor-wrapper {
   display: flex;
+  box-sizing: border-box;
   flex-direction: row;
   justify-content: space-evenly;
   width: 100%;
   padding: 0.5em;
   gap: 2em;
 
-  > * {
-    width: 50%;
-  }
+
 }
 </style>

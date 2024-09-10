@@ -4,9 +4,14 @@ import { TableRedactor } from '~/widgets/TableRedactor';
 </script>
 
 <template>
-    <TableRedactor />
+    <div class="page-wrapper">
+        <TableRedactor />
+    </div>
 </template>
 
 <style scoped lang="scss">
-
+.page-wrapper {
+    width: 100%;
+    padding: $padding;
+}
 </style>

@@ -64,6 +64,7 @@ h3 {
   margin-top: $gap;
   font-size: $medium;
   display: inline-block;
+  color: white;
 }
 
 .loader-line {

@@ -34,5 +34,6 @@ onMounted(() => {
     type="text"
     class="redacted"
     v-model="computedValue"
-    @blur="$emit('blur', computedValue)"/>
+    @blur="$emit('blur', computedValue)"
+    @keydown.enter="$emit('blur', computedValue)"/>
 </template>
