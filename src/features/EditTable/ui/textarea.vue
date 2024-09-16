@@ -4,7 +4,7 @@ import { computed, ref } from 'vue';
 import { useNotificationsStore } from '~/shared/stores/notifications';
 
 const props = defineProps(['value'])
-const emit = defineEmits(['update:value'])
+const emit = defineEmits(['update:value', 'loadInitialTable'])
 
 const notificationsStore = useNotificationsStore();
 
@@ -26,6 +26,11 @@ const handleCopy = () => {
 
 <template>  
   <div class="text-wrapper">
+    <div>
+      <ButtonFilled @click="emit('loadInitialTable')">
+        Загрузить дефолтную таблицу
+      </ButtonFilled>
+    </div>
     <article>
       Заголовок таблицы редактируется только из текстового поля, покраска клетки под "Наименование материала" ломает выравнивание. небагофича. Покраска клеток с текстом длиной больше 1 ломает вообще все. Баг
     </article>

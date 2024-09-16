@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ButtonFilled } from '#build/components';
 import { initialTable } from '~/app/assets/initial_table.html';
 import { MaintenanceTable } from '~/entity/Table';
 import { TableTextarea } from '~/features/EditTable';
@@ -46,7 +47,8 @@ const handleTextReplace = (cell: TableCell) => {
   <div></div>
   <TableTextarea
     :value="hmtlText"
-    @update:value="($event: any) => (hmtlText = $event)" />
+    @update:value="($event: any) => (hmtlText = $event)"
+    @loadInitialTable="() => (hmtlText = initialTable)" />
   </div>
 </template>
 
