@@ -7,6 +7,8 @@ export default defineNuxtConfig({
   serverDir: 'src/app/server',
   dir: {
     assets: 'app/assets',
+    static: 'app/static',
+    public: 'app/public',
     pages: 'pages',
     plugins: 'shared/plugins'
   },
