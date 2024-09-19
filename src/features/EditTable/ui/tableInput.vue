@@ -12,7 +12,6 @@ const computedValue = computed({
     return props.value;
   },
   set(value) {
-    console.log(value)
     if (value === '')
       value = ' ';
     emit('update:value', value);
