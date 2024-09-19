@@ -12,8 +12,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'cellClick', value: TableCell): void,
   (e: 'symbolReplace', cell: TableCell): void,
-  (e: 'addRow'): void,
-  (e: 'addColumn'): void
+  (e: 'addRow', columnsCount: number, rowCount: number): void,
+  (e: 'addColumn', columnsCount: number, rowCount: number): void
 }>()
 
 const store = useEditStore();
@@ -92,6 +92,8 @@ const constructTableBody = () => {
       columnIndex++;
     }
 
+    tableBody.value.columsCount = Math.max(tableBody.value.columsCount, tableRow.columns.length);
+
     if (tableRow.columns.length > 0) {
       tableBody.value.rows.push(tableRow);
     }
@@ -128,17 +130,25 @@ const handleBlur = (value: string, cell: TableCell) => {
   redactedCellWidth.value = '100%';
   emit('symbolReplace', cell);
 }
+
+const handleRowAdd = () => {
+  emit('addRow', tableBody.value.columsCount, tableBody.value.rows.length);
+}
+
+const handleColumnAdd = () => {
+  emit('addColumn', tableBody.value.columsCount, tableBody.value.rows.length);
+}
 </script>
 
 <template>
   <div class="maintenance-table-wrapper">
     <div class="buttons-wrapper">
       <ButtonFilled
-        @click="$emit('addRow')">
+        @click="handleRowAdd">
           Добавить строку
       </ButtonFilled> 
       <ButtonFilled
-        @click="$emit('addColumn')">
+        @click="handleColumnAdd">
           Добавить столбец
       </ButtonFilled>   
     </div>

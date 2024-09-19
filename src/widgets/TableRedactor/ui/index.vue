@@ -29,12 +29,20 @@ const handleTextReplace = (cell: TableCell) => {
   htmlText.value = replaceAt(htmlText.value, cell.dataStart + 4, cell.dataStart + 3 + dataLength, cell.data);
 }
 
-const handleColumnAdd = () => {
-  htmlText.value = htmlText.value.slice(0, htmlText.value.length - 1) + '<td></td>' + htmlText.value.slice(htmlText.value.length - 1);
+const handleColumnAdd = (columnsCount: number, rowCount: number) => {
+  console.log(columnsCount, rowCount);
+  const tableHeaderLength = htmlText.value.match(/([\s\S]*)<\/thead>/i)?.[0].length ?? 0;
+  console.log(tableHeaderLength);
+  htmlText.value = htmlText.value.slice(0, tableHeaderLength).replaceAll(/<\/tr>/g, `  <th> </th>\n    </tr>`) + htmlText.value.slice(tableHeaderLength).replaceAll(/<\/tr>/g, `  <td> </td>\n    </tr>`)
+  //const tableBodyString = props.tableHtml.match(/<tbody>([\s\S]*)<\/tbody>/i)?.[0] ?? '';
+  //htmlText.value = htmlText.value.replaceAll(/<\/tr>/g, `  <th> </th>\n    </tr>`);
 }
 
-const handleRowAdd = () => {
-  htmlText.value = htmlText.value.slice(0, htmlText.value.length - 1) + '<tr></tr>' + htmlText.value.slice(htmlText.value.length - 1);
+const handleRowAdd = (columnsCount: number, rowCount: number) => {
+  const upToLastRow = htmlText.value.match(/^[\s\S]*<\/tr>/)![0];
+  console.log(upToLastRow);
+  console.log(htmlText.value[upToLastRow.length])
+  htmlText.value = replaceAt(htmlText.value, upToLastRow.length, upToLastRow.length, `\n    <tr>\n      <th>${rowCount + 1}</th>\n${'      <td> </td>\n'.repeat(columnsCount - 1)}    </tr>\n`);
 }
 </script>
 
