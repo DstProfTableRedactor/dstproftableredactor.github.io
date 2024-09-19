@@ -30,8 +30,8 @@ const handleTextReplace = (cell: TableCell) => {
 }
 
 const handleColumnAdd = (columnsCount: number, rowCount: number) => {
-  const tableHeaderLength = htmlText.value.match(/([\s\S]*)<\/thead>/i)?.[0].length ?? 0;
-  htmlText.value = htmlText.value.slice(0, tableHeaderLength).replaceAll(/<\/tr>/g, `  <th> </th>\n    </tr>`) + htmlText.value.slice(tableHeaderLength).replaceAll(/<\/tr>/g, `  <td> </td>\n    </tr>`)
+  const tableHeaderLength = htmlText.value.match(/.*?(?=<\/tr>)/s)![0].length + 5;
+  htmlText.value = htmlText.value.slice(0, tableHeaderLength + 10).replaceAll(/<\/tr>/g, `  <th> </th>\n    </tr>`) + htmlText.value.slice(tableHeaderLength + 10).replaceAll(/<\/tr>/g, `  <td> </td>\n    </tr>`)
 }
 
 const handleRowAdd = (columnsCount: number, rowCount: number) => {
