@@ -11,7 +11,9 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'cellClick', value: TableCell): void,
-  (e: 'symbolReplace', cell: TableCell): void
+  (e: 'symbolReplace', cell: TableCell): void,
+  (e: 'addRow'): void,
+  (e: 'addColumn'): void
 }>()
 
 const store = useEditStore();
@@ -29,7 +31,6 @@ const tableBody = ref<TableBody>({
 const afterTable = ref<string>('')
 
 onMounted(() => {
-  //console.log('props.tableHtml', props.tableHtml);
   constructTableBody();
 })
 
@@ -88,14 +89,6 @@ const constructTableBody = () => {
         gray: thtd[0].startsWith('<th>'),
         index: columnIndex
       } as TableCell);
-      // console.log({
-      //   dataStart: thtd.index + tableRow.dataStart,
-      //   dataEnd: thtd.index + thtd[0].length + tableRow.dataStart,
-      //   data: thtd[0].slice(4, -5),
-      //   bold: false,
-      //   gray: thtd[0].startsWith('<th>'),
-      //   index: columnIndex
-      // })
       columnIndex++;
     }
 
@@ -127,10 +120,6 @@ const redactedCellWidth = ref<string>('100%');
 
 const handleCellUpdate = (value: string, cell: TableCell) => {
   cell.data = value
-  // const initialCellValue = cell.data;
-  // cell.data = value;
-  
-  // emit('symbolReplace', cell);
 }
 
 const handleBlur = (value: string, cell: TableCell) => {
@@ -143,6 +132,16 @@ const handleBlur = (value: string, cell: TableCell) => {
 
 <template>
   <div class="maintenance-table-wrapper">
+    <div class="buttons-wrapper">
+      <ButtonFilled
+        @click="$emit('addRow')">
+          Добавить строку
+      </ButtonFilled> 
+      <ButtonFilled
+        @click="$emit('addColumn')">
+          Добавить столбец
+      </ButtonFilled>   
+    </div>
     <table
       class="table">
       <thead v-html="tableHeader" />
@@ -182,6 +181,13 @@ const handleBlur = (value: string, cell: TableCell) => {
   width: fit-content !important;
   max-width: 100%;
   align-self: center;
+}
+
+.buttons-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 0 0 0.5em 0;
+  gap: 2em;
 }
 
 .table {
