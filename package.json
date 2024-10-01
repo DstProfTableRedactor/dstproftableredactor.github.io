@@ -15,7 +15,8 @@
     "nuxt": "^3.10.0",
     "pinia": "^2.1.7",
     "vue": "^3.4.15",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "yandex-metrika-module-nuxt3": "^1.5.3"
   },
   "devDependencies": {
     "@iconify/vue": "^4.1.1",

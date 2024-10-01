@@ -23,7 +23,7 @@ export default defineNuxtConfig({
   },
   css: ['~/app/assets/scss/main.scss'],
   modules: [
-    '@pinia/nuxt'
+    '@pinia/nuxt', 'yandex-metrika-module-nuxt3'
   ],
   components: {
     dirs:[ '~/shared/ui' ]
